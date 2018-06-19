@@ -21,11 +21,11 @@ import modelo.Estudiante;
  */
 public class estudiante_dao implements metodos<Estudiante>{
     
-    private static final String SQL_INSERT = "INSERT INTO alumnos(carnet, nombre, apellidos, universidad, edad, estado) VALUES (?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE alumnos SET nombre = ?, apellidos = ?, edad=? WHERE carnet=?";
-    private static final String SQL_DELETE = "DELETE FROM alumnos WHERE carnet=?";
-    private static final String SQL_READ = "SELECT * FROM alumnos WHERE carnet=?";
-    private static final String SQL_READALL = "SELECT * FROM alumnos";
+    private static final String SQL_INSERT = "INSERT INTO Incripciones(carnet, nombres, apellidos, universidad, edad, estado) VALUES (?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE Inscripciones SET nombre = ?, apellidos = ?, edad=? WHERE carnet=?";
+    private static final String SQL_DELETE = "DELETE FROM Inscripciones WHERE carnet=?";
+    private static final String SQL_READ = "SELECT * FROM Inscripciones WHERE carnet=?";
+    private static final String SQL_READALL = "SELECT * FROM Inscripciones";
     private static final Conexion con=Conexion.conectar();
 
     @Override
@@ -126,7 +126,8 @@ public class estudiante_dao implements metodos<Estudiante>{
             s = con.getCnx().prepareStatement(SQL_READALL);
             rs = s.executeQuery(SQL_READALL);
             while(rs.next()){
-                all.add(new Estudiante(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getBoolean(7)));
+                all.add(new Estudiante(rs.getInt(1),rs.getInt(2) , rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getBoolean(7)));
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(estudiante_dao.class.getName()).log(Level.SEVERE, null, ex);

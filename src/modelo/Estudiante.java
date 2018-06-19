@@ -16,7 +16,7 @@ public class Estudiante {
     
     public Estudiante(){}
 
-    public Estudiante(int id, int carnet, String nombre, String apellido, String unviersidad, int edad, boolean estado) {
+    public Estudiante(int id, int carnet, String nombre, String apellido, int edad, String unviersidad,  boolean estado) {
         this.id = id;
         this.carnet = carnet;
         this.nombre = nombre;
@@ -35,7 +35,7 @@ public class Estudiante {
         this.estado = estado;
     }
 
-    public Estudiante(String nombre, String apellido, String unviersidad, int edad, boolean estado) {
+    public Estudiante(String nombre, String apellido,int edad, String unviersidad,  boolean estado) {
         this.edad = edad;
         this.nombre = nombre;
         this.apellido = apellido;

@@ -46,7 +46,7 @@ public class Conexion {
         user="root";
         pass="";
         driver="com.mysql.jdbc.Driver";
-        url="jdbc:mysql://localhost/alumnos";
+        url="jdbc:mysql://localhost/Inscripciones";
     }
     
     public Connection getCnx(){
