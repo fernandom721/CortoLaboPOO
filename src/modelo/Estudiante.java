@@ -10,13 +10,13 @@ package modelo;
  * @author LN710Q
  */
 public class Estudiante {
-    private int id, carnet, edad;
-    private String nombre, apellido, unviersidad;
+    private int id, edad;
+    private String nombre, apellido, unviersidad, carnet;
     private boolean estado;
     
     public Estudiante(){}
 
-    public Estudiante(int id, int carnet, String nombre, String apellido, int edad, String unviersidad,  boolean estado) {
+    public Estudiante(int id, String carnet, String nombre, String apellido, int edad, String unviersidad,  boolean estado) {
         this.id = id;
         this.carnet = carnet;
         this.nombre = nombre;
@@ -26,7 +26,7 @@ public class Estudiante {
         this.estado = estado;
     }
 
-    public Estudiante(int carnet, String nombre, String apellido, String unviersidad, int edad, boolean estado) {
+    public Estudiante(String carnet, String nombre, String apellido, int edad, String unviersidad,  boolean estado) {
         this.carnet = carnet;
         this.edad = edad;
         this.nombre = nombre;
@@ -51,11 +51,11 @@ public class Estudiante {
         this.id = id;
     }
 
-    public int getCarnet() {
+    public String getCarnet() {
         return carnet;
     }
 
-    public void setCarnet(int carnet) {
+    public void setCarnet(String carnet) {
         this.carnet = carnet;
     }
 

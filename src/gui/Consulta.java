@@ -118,8 +118,8 @@ public class Consulta extends JFrame{
         carnet.setBounds(140, 10, ANCHOC, ALTOC);
         nombre.setBounds(140, 60, ANCHOC, ALTOC);
         apellidos.setBounds(140, 100, ANCHOC, ALTOC);
-        universidad.setBounds(140, 150, ANCHOC, ALTOC);
         edad.setBounds(140, 200, ANCHOC, ALTOC);
+        universidad.setBounds(140, 150, ANCHOC, ALTOC);
         activo.setBounds(140, 240, ANCHOC, ALTOC);
         inactivo.setBounds(240, 240, ANCHOC, ALTOC);
         
@@ -143,6 +143,10 @@ public class Consulta extends JFrame{
                         return String.class;
                     case 2:
                         return String.class;
+                    case 3:
+                        return String.class;
+                    case 4:
+                        return String.class;
                     default:
                         return Boolean.class;
                 }
@@ -151,15 +155,15 @@ public class Consulta extends JFrame{
         tm.addColumn("Carnet");
         tm.addColumn("Nombre");
         tm.addColumn("Apellido");
-        tm.addColumn("Universidad");
         tm.addColumn("Edad");
+        tm.addColumn("Universidad");
         tm.addColumn("Estado");
         
         estudiante_dao ed = new estudiante_dao();
         ArrayList<Estudiante> estudiantes = ed.readAll();
         
         for(Estudiante ei : estudiantes){
-            tm.addRow(new Object[]{ei.getCarnet(),ei.getNombre(),ei.getApellido(),ei.getUnviersidad(),ei.getEdad(),ei.isEstado()});
+            tm.addRow(new Object[]{ei.getCarnet(),ei.getNombre(),ei.getApellido(),ei.getEdad(),ei.getUnviersidad(),ei.isEstado()});
         }
         
         resultados.setModel(tm);
@@ -171,7 +175,7 @@ public class Consulta extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 estudiante_dao fd = new estudiante_dao();
-                Estudiante f = new Estudiante(Integer.parseInt(carnet.getText()), nombre.getText(), apellidos.getText(), universidad.getSelectedItem().toString(), Integer.parseInt(edad.getText()), true);
+                Estudiante f = new Estudiante(carnet.getText(), nombre.getText(), apellidos.getText(),Integer.parseInt(edad.getText()), universidad.getSelectedItem().toString(),  true);
                 if(inactivo.isSelected()){
                     f.setEstado(false);
                 }
@@ -184,7 +188,20 @@ public class Consulta extends JFrame{
                 }
             }
         });
-        
+        actualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                estudiante_dao fd = new estudiante_dao();
+                Estudiante f = new Estudiante(carnet.getText(), nombre.getText(), apellidos.getText(),Integer.parseInt(edad.getText()), universidad.getSelectedItem().toString(),  true);
+                if(fd.update(f)){
+                    JOptionPane.showMessageDialog(null,"Estudiante actualizad con exito.");
+                    limpiarCampos();
+                    llenarTabla();
+                } else{
+                    JOptionPane.showMessageDialog(null, "Ocurrió un problema al momento de actualizar el estudiante.");
+                }
+            }
+        });
         eliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -208,7 +225,7 @@ public class Consulta extends JFrame{
                     JOptionPane.showMessageDialog(null, "El filtro buscado no se ha encontrado.");
                 } else{
                     
-                    carnet.setText(Integer.toString(f.getCarnet()));
+                    carnet.setText(f.getCarnet());
                     nombre.setText(f.getNombre());
                     apellidos.setText(f.getApellido());
                     universidad.setSelectedItem(f.getUnviersidad());

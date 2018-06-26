@@ -21,11 +21,11 @@ import modelo.Estudiante;
  */
 public class estudiante_dao implements metodos<Estudiante>{
     
-    private static final String SQL_INSERT = "INSERT INTO Incripciones(carnet, nombres, apellidos, universidad, edad, estado) VALUES (?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE Inscripciones SET nombre = ?, apellidos = ?, edad=? WHERE carnet=?";
-    private static final String SQL_DELETE = "DELETE FROM Inscripciones WHERE carnet=?";
-    private static final String SQL_READ = "SELECT * FROM Inscripciones WHERE carnet=?";
-    private static final String SQL_READALL = "SELECT * FROM Inscripciones";
+    private static final String SQL_INSERT = "INSERT INTO alumnos(carnet, nombres, apellidos, edad, universidad, estado) VALUES (?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE alumnos SET nombres = ?, apellidos = ?, edad=?, universidad=? ,estado=? WHERE carnet=?";
+    private static final String SQL_DELETE = "DELETE FROM alumnos WHERE carnet=?";
+    private static final String SQL_READ = "SELECT * FROM alumnos WHERE carnet=?";
+    private static final String SQL_READALL = "SELECT * FROM alumnos";
     private static final Conexion con=Conexion.conectar();
 
     @Override
@@ -33,11 +33,11 @@ public class estudiante_dao implements metodos<Estudiante>{
         PreparedStatement ps;
         try {
             ps = con.getCnx().prepareStatement(SQL_INSERT);
-            ps.setInt(1, g.getCarnet());
+            ps.setString(1, g.getCarnet());
             ps.setString(2, g.getNombre());
             ps.setString(3, g.getApellido());
-            ps.setString(4, g.getUnviersidad());
-            ps.setInt(5, g.getEdad());
+            ps.setString(5, g.getUnviersidad());
+            ps.setInt(4, g.getEdad());
             ps.setBoolean(6, true);
             if(ps.executeUpdate()>0){
                 return true;
@@ -76,11 +76,12 @@ public class estudiante_dao implements metodos<Estudiante>{
         try {
             System.out.println(c.getCarnet());
             ps = con.getCnx().prepareStatement(SQL_UPDATE);
-            ps.setInt(1, c.getCarnet());
+            ps.setString(1, c.getCarnet());
             ps.setString(2, c.getNombre());
             ps.setString(3, c.getApellido());
-            ps.setString(4, c.getUnviersidad());
-            ps.setInt(5, c.getEdad());
+            ps.setString(5, c.getUnviersidad());
+            ps.setInt(4, c.getEdad());
+            ps.setBoolean(6, true);
             if(ps.executeUpdate()>0){
                 return true;
             }
@@ -105,7 +106,7 @@ public class estudiante_dao implements metodos<Estudiante>{
             rs = ps.executeQuery();
             
             while(rs.next()){
-                e = new Estudiante(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getBoolean(6));
+                e = new Estudiante(rs.getString(2), rs.getString(3), rs.getString(4),rs.getInt(5), rs.getString(6),  rs.getBoolean(7));
             }
             rs.close();
         } catch (SQLException ex) {
@@ -126,7 +127,7 @@ public class estudiante_dao implements metodos<Estudiante>{
             s = con.getCnx().prepareStatement(SQL_READALL);
             rs = s.executeQuery(SQL_READALL);
             while(rs.next()){
-                all.add(new Estudiante(rs.getInt(1),rs.getInt(2) , rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getBoolean(7)));
+                all.add(new Estudiante(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getBoolean(7)));
                 
             }
         } catch (SQLException ex) {
